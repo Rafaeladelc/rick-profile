@@ -2,10 +2,7 @@ import { fetchJson } from "./fetchJson.js";
 
 export function buildCharacterSearchUrl({ name, page = 1 }) {
   const baseUrl = "https://rickandmortyapi.com/api/character/";
-  const params = new URLSearchParams({
-    name: name.trim(),
-    page: String(page),
-  });
+  const params = new URLSearchParams({ name: name.trim(), page: String(page) });
   return `${baseUrl}?${params.toString()}`;
 }
 
@@ -17,7 +14,6 @@ function noResultsError() {
 
 export async function getFirstCharacterByName(name) {
   const url = buildCharacterSearchUrl({ name });
-
   let data;
   try {
     data = await fetchJson(url);
@@ -27,10 +23,9 @@ export async function getFirstCharacterByName(name) {
     }
     throw err;
   }
-
   const first = data.results?.[0];
   if (!first) {
     throw noResultsError();
   }
   return first;
-  }
+}
